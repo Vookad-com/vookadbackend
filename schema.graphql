@@ -1,0 +1,41 @@
+type Address {
+  location: Location!
+  building: String!
+  area: String!
+  landmark: String
+}
+
+type Location {
+  type: String!
+  coordinates: [Float!]!
+}
+
+type User {
+  _id: ID!
+  phone: String!
+  name: String
+  addresses: [Address]
+}
+
+input VerifyInput {
+  phone: String!
+  otp: String!
+  uid:String!
+}
+type Jwt {
+  token: String!
+}
+
+type Query {
+  verifyOtp(verify: VerifyInput): Jwt
+  getAddresses: User
+}
+
+type UserWithOTP {
+  user: User
+  otp: String
+}
+
+type Mutation {
+  checkPhonenSend(phone: String!): UserWithOTP
+}
