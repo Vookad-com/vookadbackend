@@ -1,0 +1,30 @@
+type InventoryItem {
+  _id: ID!
+  name: String!
+  description: String
+  enable: Boolean
+  gallery: [String]
+  family: [String]
+  category: [Category]
+}
+
+type Category {
+  price: Float
+  name: String
+}
+
+input CategoryInput {
+  price: Float
+  name: String
+}
+
+
+input InventoryItemInput {
+  _id: ID!
+  name: String!
+  description: String
+  enable: Boolean
+  gallery: [String]
+  family: [String]
+  category: [CategoryInput]
+}

@@ -1,0 +1,88 @@
+type Address {
+  location: Location!
+  building: String!
+  area: String!
+  landmark: String
+}
+
+type Location {
+  type: String!
+  coordinates: [Float!]!
+}
+
+type User {
+  _id: ID!
+  phone: String!
+  name: String
+}
+
+input VerifyInput {
+  phone: String!
+  otp: String!
+  uid:String!
+}
+type Jwt {
+  token: String!
+}
+
+type Query {
+  verifyOtp(verify: VerifyInput): Jwt
+  getAddresses: User
+  getInventoryItem(id: ID): InventoryItem
+  inventoryItems(family:String!): [InventoryItem]
+}
+
+type Mutation {
+  checkPhonenSend(phone: String!): UserWithOTP
+  inventoryItem(obj: InventoryItemInput): InventoryItem
+  deleteinventoryItem(id: ID):InventoryItem
+  inventoryAdd(family:String!): InventoryItem
+}
+
+type UserWithOTP {
+  user: User
+  otp: String
+}
+
+type InventoryItem {
+  _id: ID!
+  name: String!
+  description: String
+  enable: Boolean
+  gallery: [Gallery]
+  family: [String]
+  category: [Category]
+}
+
+type Category {
+  price: Float
+  name: String
+  _id: ID
+}
+type Gallery {
+  name: String
+  url: String
+  id: String
+}
+
+input CategoryInput {
+  price: Float
+  name: String
+  id: String
+}
+input GalleryInput {
+  name: String
+  url: String
+  id: String
+}
+
+
+input InventoryItemInput {
+  _id: ID!
+  name: String!
+  description: String
+  enable: Boolean
+  gallery: [GalleryInput]
+  family: [String]
+  category: [CategoryInput]
+}

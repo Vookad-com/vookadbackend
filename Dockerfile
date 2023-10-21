@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Expose the port your app runs on
-EXPOSE 4000
+EXPOSE 80
 
 # Define the command to start your application
 CMD ["node", "dist/index.js"]
