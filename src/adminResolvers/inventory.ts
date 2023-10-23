@@ -21,9 +21,15 @@ type InventoryItemInput = {
   name: string;
   description?: string | null;
   enable?: boolean | null;
-  gallery?: string[] | null;
+  gallery?: GalleryInput[] | null;
   family?: string[] | null;
   category?: CategoryInput[] | null;
+};
+
+type GalleryInput = {
+  url?: string;
+  id?: string;
+  name?: string;
 };
 
 type CategoryInput = {
@@ -58,7 +64,7 @@ const getItem = async (_:any, { id }:{id:string}, {token}: {token:string}, ) =>{
     try {
         return await inventory.findById(id);
       } catch (error) {
-        logger.error("error");
+        logger.error(error);
         throw new GraphQLError('Problem in fetching item');
       }
 }
@@ -69,7 +75,7 @@ const delItem = async (_:any, { id }:{id:string}, {token}: {token:string}, ) =>{
     try {
         return await inventory.findByIdAndRemove(id);
       } catch (error) {
-        logger.error("error");
+        logger.error(error);
         throw new GraphQLError('Problem in fetching item');
       }
 }
@@ -80,7 +86,7 @@ const getItems = async (_:any, { family}:{family:string}, {token}: {token:string
     try {
         return await inventory.find({family});
       } catch (error) {
-        logger.error("error");
+        logger.error(error);
         throw new GraphQLError('Problem in fetching item');
       }
 }
@@ -89,10 +95,22 @@ const editItem = async (_:any, { obj }:{obj:InventoryItemInput}, {token}: {token
     //   throw new GraphQLError('Auth error');
 
     try {
-        const newItem = inventory.findByIdAndUpdate(obj._id ,obj, { new: true });
+        const newItem = await inventory.findByIdAndUpdate(obj._id ,obj, { new: true });
         return newItem;
       } catch (error) {
-        logger.error("error");
+        logger.error(error);
+        throw new GraphQLError('Problem in making new item');
+      }
+}
+const liveToggle = async (_:any, { id, status }:{id:string, status:boolean}, {token}: {token:string}, ) =>{
+    // if(token=='')
+    //   throw new GraphQLError('Auth error');
+
+    try {
+        const newItem = inventory.findByIdAndUpdate(id,{enable:status}, { new: true });
+        return newItem;
+      } catch (error) {
+        logger.error(error);
         throw new GraphQLError('Problem in making new item');
       }
 }
@@ -103,4 +121,5 @@ export default {
     delItem,
     getItems,
     editItem,
+    liveToggle,
 }

@@ -29,6 +29,8 @@ type Jwt {
 type Query {
   verifyOtp(verify: VerifyInput): Jwt
   getAddresses: User
+  inventoryItems(family:String!): [InventoryItem]
+  banner(id:ID!): Banner
 }
 
 type UserWithOTP {
@@ -38,4 +40,33 @@ type UserWithOTP {
 
 type Mutation {
   checkPhonenSend(phone: String!): UserWithOTP
+}
+
+type Gallery {
+  name: String
+  url: String
+  id: String
+  route: String
+  _id: ID
+}
+
+type InventoryItem {
+  _id: ID!
+  name: String!
+  description: String
+  enable: Boolean
+  gallery: [Gallery]
+  family: [String]
+  category: [Category]
+}
+
+type Category {
+  price: Float
+  name: String
+  _id: ID
+}
+
+type Banner {
+  gallery: [Gallery]
+  _id: ID!
 }

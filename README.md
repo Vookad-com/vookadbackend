@@ -17,7 +17,7 @@ or
 
     docker-compose up
 
-server will be available at http://localhost:3000
+server will be available at http://localhost:5000
 ## for starting dev server
 
 to install dependencies
