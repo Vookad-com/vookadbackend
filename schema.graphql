@@ -29,6 +29,7 @@ type Jwt {
 type Query {
   verifyOtp(verify: VerifyInput): Jwt
   getAddresses: User
+  getInventoryItem(id: ID): InventoryItem
   inventoryItems(family:String!): [InventoryItem]
   banner(id:ID!): Banner
 }
