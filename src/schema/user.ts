@@ -29,3 +29,4 @@ const userSchema = new mongoose.Schema({
 
 // Create the PhonebookEntry model
 export const users = mongoose.model('users', userSchema);
+export const Address = mongoose.model('address', addressSchema);
