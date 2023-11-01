@@ -11,7 +11,7 @@ to build docker container
 
 to start docker container   
 
-    docker run -p 3000:3000 vookadbackend
+    docker run -p 5000:5000 vookadbackend
 
 or
 

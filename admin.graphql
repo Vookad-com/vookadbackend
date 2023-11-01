@@ -59,6 +59,7 @@ type InventoryItem {
   enable: Boolean
   gallery: [Gallery]
   family: [String]
+  tags: [String]
   category: [Category]
 }
 
@@ -93,6 +94,7 @@ input InventoryItemInput {
   name: String!
   description: String
   gallery: [GalleryInput]
+  tags: [String]
   family: [String]
   category: [CategoryInput]
 }

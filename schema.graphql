@@ -3,6 +3,7 @@ type Address {
   building: String!
   area: String!
   landmark: String
+  label: [String]!
 }
 
 type Location {
@@ -28,7 +29,7 @@ type Jwt {
 
 type Query {
   verifyOtp(verify: VerifyInput): Jwt
-  getAddresses: User
+  getUser: User
   getInventoryItem(id: ID): InventoryItem
   inventoryItems(family:String!): [InventoryItem]
   banner(id:ID!): Banner
@@ -41,6 +42,19 @@ type UserWithOTP {
 
 type Mutation {
   checkPhonenSend(phone: String!): UserWithOTP
+  saveAddress(addPayload:AddPayload):Address
+}
+
+input AddPayload {
+  coordinates: [Float!]!
+  data: AddAddressData
+}
+
+input AddAddressData {
+  building: String
+  area: String
+  landmark: String
+  label: String
 }
 
 type Gallery {

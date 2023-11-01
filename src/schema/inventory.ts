@@ -11,6 +11,7 @@ const inventorySchema = new mongoose.Schema({
   enable: {
     type: Boolean
   },
+  tags: [{ type: String }],
   gallery: {
     type: [{
       id: String,

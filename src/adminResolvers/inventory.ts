@@ -23,6 +23,7 @@ type InventoryItemInput = {
   enable?: boolean | null;
   gallery?: GalleryInput[] | null;
   family?: string[] | null;
+  tags?: string[] | null;
   category?: CategoryInput[] | null;
 };
 

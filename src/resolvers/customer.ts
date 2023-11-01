@@ -1,5 +1,5 @@
 import logger from "../logger";
-import { Address, users } from "../schema/user";
+import { users } from "../schema/user";
 import { GraphQLError } from 'graphql';
 
 type Coordinates = [number, number];
@@ -8,9 +8,10 @@ type CompAddress = {
   building: string;
   area: string;
   landmark: string;
+  label:string;
 };
 
-const saveAddress = async (_: any, args: { coordinates: Coordinates, data: CompAddress }, { token }: { token: string }) => {
+const saveAddress = async (_: any, {addPayload}: { addPayload : {coordinates: Coordinates, data: CompAddress} }, { token }: { token: string }) => {
   try {
     
     const user = await users.findById(token);
@@ -19,20 +20,19 @@ const saveAddress = async (_: any, args: { coordinates: Coordinates, data: CompA
     }
 
     
-    const newAddress = new Address({
+    const newAddress = {
       location: {
         type: "Point",
-        coordinates: args.coordinates,
+        coordinates: addPayload.coordinates,
       },
-      building: args.data.building,
-      area: args.data.area,
-      landmark: args.data.landmark,
-    });
+      building: addPayload.data.building,
+      area: addPayload.data.area,
+      landmark: addPayload.data.landmark,
+      label:[addPayload.data.label],
+    };
 
-    
     user.addresses.push(newAddress);
 
-    
     await user.save();
 
     return newAddress; 
@@ -41,7 +41,21 @@ const saveAddress = async (_: any, args: { coordinates: Coordinates, data: CompA
     throw new GraphQLError('Error saving address');
   }
 }
+const getUser = async (_: any, args:any, { token }: { token: string }) => {
+  try {
+    const user = await users.findById(token);
+    if (!user) {
+      throw new GraphQLError("Unauthorized");
+    }
+    
+    return user; 
+  } catch (error) {
+    logger.error("Error: " + error);
+    throw new GraphQLError('Error in getting user');
+  }
+}
 
 export default {
   saveAddress,
+  getUser
 }

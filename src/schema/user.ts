@@ -11,6 +11,10 @@ const addressSchema = new mongoose.Schema({
       default: [0, 0], // Default to [0, 0] if no coordinates provided
     },
   },
+  label: {
+    type: [String],
+    enum: ['home', 'work', 'other'],
+  },
   building: String,
   area: String,
   landmark: String, // Can be null or omitted if not provided
@@ -29,4 +33,3 @@ const userSchema = new mongoose.Schema({
 
 // Create the PhonebookEntry model
 export const users = mongoose.model('users', userSchema);
-export const Address = mongoose.model('address', addressSchema);

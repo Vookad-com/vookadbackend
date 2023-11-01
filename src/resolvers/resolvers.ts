@@ -7,13 +7,14 @@ import ad_inventory from "../adminResolvers/inventory";
 const resolvers = {
   Query: {
     verifyOtp : auth.verifyOtp,
-    getAddresses : customer.getAddresses,
     getInventoryItem : ad_inventory.getItem,
     banner: banner.carouselView,
     inventoryItems: inventory.getItems,
+    getUser: customer.getUser
   },
   Mutation: {
     checkPhonenSend: auth.checkPhonenSend,
+    saveAddress : customer.saveAddress,
   },
 };
 
