@@ -16,6 +16,11 @@ const addressSchema = new mongoose.Schema({
     enum: ['home', 'work', 'other'],
   },
   building: String,
+  pincode:{
+    type: String,
+    maxlength: 6, // Set the maximum length to 6 characters
+    required: true,
+  },
   area: String,
   landmark: String, // Can be null or omitted if not provided
 });

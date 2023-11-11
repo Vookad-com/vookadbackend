@@ -1,7 +1,22 @@
+type Query {
+  verifyOtp(verify: VerifyInput): Jwt
+  getUser: User
+  getInventoryItem(id: ID): InventoryItem
+  inventoryItems(family:String!): [InventoryItem]
+  banner(id:ID!): Banner
+  nearby(location:[Float]):[NearbyItem]
+}
+type Mutation {
+  checkPhonenSend(phone: String!): UserWithOTP
+  saveAddress(addPayload:AddPayload!, id:ID):Address
+  delAddr(id:ID!):User
+}
 type Address {
+  _id: ID,
   location: Location!
   building: String!
   area: String!
+  pincode: String!
   landmark: String
   label: [String]!
 }
@@ -27,23 +42,12 @@ type Jwt {
   token: String!
 }
 
-type Query {
-  verifyOtp(verify: VerifyInput): Jwt
-  getUser: User
-  getInventoryItem(id: ID): InventoryItem
-  inventoryItems(family:String!): [InventoryItem]
-  banner(id:ID!): Banner
-}
 
 type UserWithOTP {
   user: User
   otp: String
 }
 
-type Mutation {
-  checkPhonenSend(phone: String!): UserWithOTP
-  saveAddress(addPayload:AddPayload):Address
-}
 
 input AddPayload {
   coordinates: [Float!]!
@@ -51,10 +55,11 @@ input AddPayload {
 }
 
 input AddAddressData {
-  building: String
-  area: String
-  landmark: String
-  label: String
+  building: String!
+  area: String!
+  landmark: String!
+  label: String!
+  pincode: String!
 }
 
 type Gallery {
@@ -72,6 +77,7 @@ type InventoryItem {
   enable: Boolean
   gallery: [Gallery]
   family: [String]
+  tags: [String]
   category: [Category]
 }
 
@@ -84,4 +90,10 @@ type Category {
 type Banner {
   gallery: [Gallery]
   _id: ID!
+}
+
+type NearbyItem{
+  displayname: String
+  distance:Float
+  info:[InventoryItem]
 }

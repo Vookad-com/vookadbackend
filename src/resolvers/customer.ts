@@ -9,17 +9,11 @@ type CompAddress = {
   area: string;
   landmark: string;
   label:string;
+  pincode:string;
 };
 
-const saveAddress = async (_: any, {addPayload}: { addPayload : {coordinates: Coordinates, data: CompAddress} }, { token }: { token: string }) => {
+const saveAddress = async (_: any, {id,addPayload}: { id:string|null;addPayload : {coordinates: Coordinates, data: CompAddress} }, { token }: { token: string }) => {
   try {
-    
-    const user = await users.findById(token);
-    if (!user) {
-      throw new GraphQLError("Unauthorized");
-    }
-
-    
     const newAddress = {
       location: {
         type: "Point",
@@ -29,7 +23,25 @@ const saveAddress = async (_: any, {addPayload}: { addPayload : {coordinates: Co
       area: addPayload.data.area,
       landmark: addPayload.data.landmark,
       label:[addPayload.data.label],
+      pincode:addPayload.data.pincode,
     };
+
+
+    if(id != null){
+      await users.updateOne(
+        { _id: token, 'addresses._id': id },
+        { $set: { 'addresses.$': newAddress } },
+        { new: true }
+      )
+      return newAddress; 
+    }
+    
+    const user = await users.findById(token);
+    if (!user) {
+      throw new GraphQLError("Unauthorized");
+    }
+
+    
 
     user.addresses.push(newAddress);
 
@@ -39,6 +51,21 @@ const saveAddress = async (_: any, {addPayload}: { addPayload : {coordinates: Co
   } catch (error) {
     logger.error("Error: " + error);
     throw new GraphQLError('Error saving address');
+  }
+}
+const delAddress = async (_: any, {id}: { id :string }, { token }: { token: string }) => {
+  try {
+    
+    const user = await users.findByIdAndUpdate(token,{ $pull: { addresses : { _id : id } } },
+      { new: true });
+    if (!user) {
+      throw new GraphQLError("Unauthorized");
+    }
+
+    return user;
+  } catch (error) {
+    logger.error("Error: " + error);
+    throw new GraphQLError('Error deleting address');
   }
 }
 const getUser = async (_: any, args:any, { token }: { token: string }) => {
@@ -57,5 +84,6 @@ const getUser = async (_: any, args:any, { token }: { token: string }) => {
 
 export default {
   saveAddress,
+  delAddress,
   getUser
 }

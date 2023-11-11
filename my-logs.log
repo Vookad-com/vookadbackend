@@ -3,3 +3,17 @@
 {"_message":"Inventory validation failed","errors":{"family.0":{"kind":"enum","message":"`package` is not a valid enum value for path `family.0`.","name":"ValidatorError","path":"family.0","properties":{"enumValues":["daily","monthly","product"],"message":"`package` is not a valid enum value for path `family.0`.","path":"family.0","type":"enum","value":"package"},"value":"package"}},"level":"error","message":"Inventory validation failed: family.0: `package` is not a valid enum value for path `family.0`.","name":"ValidationError"}
 {"level":"error","message":"Error: ValidationError: addresses.2.label.0: `lodu` is not a valid enum value for path `label.0`."}
 {"level":"error","message":"Error: ValidationError: addresses.2.label.0: `lodu` is not a valid enum value for path `label.0`."}
+{"_message":"Chef validation failed","errors":{"inventory.1._id":{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"6532e191bff3d6ad6aeelodu\" (type string) at path \"_id\" because of \"BSONError\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"6532e191bff3d6ad6aeelodu\"","value":"6532e191bff3d6ad6aeelodu","valueType":"string"},"inventory.1.inventoryid":{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"6532e191bff3d6ad6aeelodu\" (type string) at path \"inventoryid\" because of \"BSONError\"","name":"CastError","path":"inventoryid","reason":{},"stringValue":"\"6532e191bff3d6ad6aeelodu\"","value":"6532e191bff3d6ad6aeelodu","valueType":"string"}},"level":"error","message":"Chef validation failed: inventory.1.inventoryid: Cast to ObjectId failed for value \"6532e191bff3d6ad6aeelodu\" (type string) at path \"inventoryid\" because of \"BSONError\", inventory.1._id: Cast to ObjectId failed for value \"6532e191bff3d6ad6aeelodu\" (type string) at path \"_id\" because of \"BSONError\"","name":"ValidationError"}
+{"level":"error"}
+{"level":"error"}
+{"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \"\" (type string) at path \"_id\" for model \"users\""}
+{"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \"\" (type string) at path \"_id\" for model \"users\""}
+{"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \"\" (type string) at path \"_id\" for model \"users\""}
+{"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \"\" (type string) at path \"_id\" for model \"users\""}
+{"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \"\" (type string) at path \"_id\" for model \"users\""}
+{"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \"\" (type string) at path \"_id\" for model \"users\""}
+{"level":"error","message":"Error: CastError: Cast to ObjectId failed for value \":65419bfbe94b51ab7cc2a792\" (type string) at path \"_id\" for model \"users\""}
+{"level":"error","message":"Error: TypeError: Cannot read properties of undefined (reading 'find')"}
+{"level":"error","message":"Error: TypeError: Cannot read properties of null (reading 'addresses')"}
+{"level":"error","message":"Error: TypeError: Cannot read properties of null (reading 'addresses')"}
+{"level":"error","message":"Error: TypeError: Cannot read properties of null (reading 'addresses')"}
