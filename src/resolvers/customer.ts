@@ -29,14 +29,14 @@ const saveAddress = async (_: any, {id,addPayload}: { id:string|null;addPayload 
 
     if(id != null){
       await users.updateOne(
-        { _id: token, 'addresses._id': id },
+        { fireId: token, 'addresses._id': id },
         { $set: { 'addresses.$': newAddress } },
         { new: true }
       )
       return newAddress; 
     }
     
-    const user = await users.findById(token);
+    const user = await users.findOne({ fireId: token });
     if (!user) {
       throw new GraphQLError("Unauthorized");
     }
@@ -56,8 +56,11 @@ const saveAddress = async (_: any, {id,addPayload}: { id:string|null;addPayload 
 const delAddress = async (_: any, {id}: { id :string }, { token }: { token: string }) => {
   try {
     
-    const user = await users.findByIdAndUpdate(token,{ $pull: { addresses : { _id : id } } },
-      { new: true });
+    const user = await users.findByIdAndUpdate(
+      { fireId: token }, // Change yourFireId to the actual value you're searching for
+      { $pull: { addresses: { _id: id } } },
+      { new: true }
+    );
     if (!user) {
       throw new GraphQLError("Unauthorized");
     }
@@ -70,7 +73,7 @@ const delAddress = async (_: any, {id}: { id :string }, { token }: { token: stri
 }
 const getUser = async (_: any, args:any, { token }: { token: string }) => {
   try {
-    const user = await users.findById(token);
+    const user = await users.findOne({ fireId: token });
     if (!user) {
       throw new GraphQLError("Unauthorized");
     }

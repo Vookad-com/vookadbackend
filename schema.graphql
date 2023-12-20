@@ -1,15 +1,17 @@
 type Query {
-  verifyOtp(verify: VerifyInput): Jwt
+  # verifyOtp(verify: VerifyInput): Jwt
   getUser: User
-  getInventoryItem(id: ID): InventoryItem
+  getInventoryItem(id: ID!, chefId:ID!): CartItem
   inventoryItems(family:String!): [InventoryItem]
   banner(id:ID!): Banner
   nearby(location:[Float]):[NearbyItem]
 }
 type Mutation {
-  checkPhonenSend(phone: String!): UserWithOTP
+  # checkPhonenSend(phone: String!): UserWithOTP
+  createORCheck:User
   saveAddress(addPayload:AddPayload!, id:ID):Address
   delAddr(id:ID!):User
+  codcheckout(items: [CheckoutItem], address: CheckoutAddress, total: Float):Order
 }
 type Address {
   _id: ID,
@@ -94,6 +96,43 @@ type Banner {
 
 type NearbyItem{
   displayname: String
+  _id: ID
   distance:Float
   info:[InventoryItem]
+}
+
+type CartItem {
+  info: InventoryItem
+  chefId: ID
+  enable: Boolean
+}
+
+type Order{
+  address:Address
+  customerid:ID!
+  _id:ID!
+  mode:String
+  status:String
+  total:Float
+}
+
+input CheckoutItem {
+  chefid:String
+  pdtid:String
+  catid:String
+  quantity:Float
+}
+
+input GPS {
+  coordinates: [Float!]!
+  type: String
+}
+
+input CheckoutAddress {
+  building: String!
+  area: String!
+  landmark: String!
+  label: [String!]
+  pincode: String!
+  location: GPS
 }

@@ -14,6 +14,8 @@ import resolvers from './resolvers/resolvers';
 import adminResolve from './adminResolvers/resolvers';
 
 import mongoose from 'mongoose';
+import { fireAuth } from './firebase';
+import { FirebaseUser } from './types';
 
 require('dotenv').config();
 
@@ -56,13 +58,16 @@ app.use(cookieParser());
 
 server.start().then(() => {
   app.use('/graphql', cors(), json(), expressMiddleware(server, {
-    context : async ({req,res}):Promise<{ token: string }> => {
+    context : async ({req,res}):Promise<{ token: string|null, usertoken: string|null }> => {
       const token = req.headers.authorization || '';
+      if(token == '')
+        return {token: null, usertoken:null};
       try {
-        const decodedToken = jwt.verify(token, jwt_secret);
-        return {token:decodedToken};
+        const decodedToken = await fireAuth.verifyIdToken(token);
+        return {token : decodedToken.uid, usertoken: token};
       } catch (error) {
-        return {token: ''};
+        console.error(error);
+        return {token: null, usertoken:token};
       }
     }
   }));

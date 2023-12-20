@@ -1,11 +1,15 @@
+import { GraphQLError } from "graphql";
+const mongoose = require('mongoose');
 import logger from "../logger";
 import { users } from "../schema/user";
+import { FirebaseUser } from "../types";
+import { fireAuth } from "../firebase";
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 const accountSid = "ACae7ca100603b07db9a33a7b2b8a3efbb";
 const authToken = process.env.TWILIO_AUTH_TOKEN;
-const verifySid = "VAa983d927931ddab856aaed11bade267f";
+const verifySid = "VA5db2a61c303a98f17b62c6b2e64181e2";
 const client = require("twilio")(accountSid, authToken);
 const jwt_secret = process.env.JWT_SECRET;
 
@@ -80,22 +84,26 @@ const sendOtp = async (phone:string) => {
     });
 }
 
-//   .then((verification) => console.log(verification.status))
-//   .then(() => {
-//     const readline = require("readline").createInterface({
-//       input: process.stdin,
-//       output: process.stdout,
-//     });
-//     readline.question("Please enter the OTP:", (otpCode) => {
-//       client.verify.v2
-//         .services(verifySid)
-//         .verificationChecks.create({ to: "+919078101920", code: otpCode })
-//         .then((verification_check) => console.log(verification_check.status))
-//         .then(() => readline.close());
-//     });
-//   });
+const createORCheck = async (_: any, args:any, { usertoken }: { usertoken: string }) => {
+    try {
+        const token = await fireAuth.verifyIdToken(usertoken);
+        let user = await users.findOne({ fireId: token.uid });
+        if (!user) {
+            const newUser = new users({
+                phone:token.phone_number,
+                fireId: token.uid
+            });
+            user = await newUser.save();
+        }
+        return user;
+      } catch (error) {
+        logger.error(error);
+        throw new Error('Error checking phone number');
+      }
+  }
 
 export default {
     checkPhonenSend,
-    verifyOtp
+    verifyOtp,
+    createORCheck
 };

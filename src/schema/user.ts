@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const addressSchema = new mongoose.Schema({
+export const addressSchema = new mongoose.Schema({
   location: {
     type: {
       type: String,
@@ -27,6 +28,10 @@ const addressSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema({
   phone: {
+    type: String,
+    required: true,
+  },
+  fireId: {
     type: String,
     required: true,
   },
