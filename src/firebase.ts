@@ -2,6 +2,7 @@ import { applicationDefault } from "firebase-admin/app";
 
 const { initializeApp } = require('firebase-admin/app');
 import { getAuth } from 'firebase-admin/auth';
+import { getMessaging } from 'firebase-admin/messaging';
 require('dotenv').config();
 
 var admin = require("firebase-admin");
@@ -13,4 +14,5 @@ export const myapp = admin.initializeApp({
 });
 
 export const fireAuth = getAuth(myapp);
-fireAuth.app.options
+export const fireNotifier = getMessaging(myapp);
+// fireAuth.app.options

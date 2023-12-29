@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document, Date } from 'mongoose';
 import { addressSchema } from './user';
 
 // Product Schema
@@ -48,6 +48,7 @@ interface Order extends Document {
     customerid: mongoose.Types.ObjectId;
     mode: PaymentMode;
     status: OrderStatus;
+    dod: Date;
 }
 
 const orderSchema = new Schema({
@@ -57,8 +58,8 @@ const orderSchema = new Schema({
         min: 0,
     },
     customerid: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
+        type: String,
+        required: true
     },
     address: addressSchema,
     mode: {
@@ -69,6 +70,12 @@ const orderSchema = new Schema({
         type: String,
         enum: Object.values(OrderStatus),
     },
-});
+    dod:{ //date of delivery
+        type: Date,
+        required: true // You can make it required or not based on your needs
+      },
+}, {
+    timestamps: true // Add createdAt and updatedAt fields
+  });
 
 export const Order = mongoose.model<Order>('Order', orderSchema);

@@ -11,7 +11,8 @@ type Mutation {
   createORCheck:User
   saveAddress(addPayload:AddPayload!, id:ID):Address
   delAddr(id:ID!):User
-  codcheckout(items: [CheckoutItem], address: CheckoutAddress, total: Float):Order
+  codcheckout(items: [CheckoutItem]!, address: CheckoutAddress!, total: Float!, dod:String!):Order
+  setFCM(fcmToken:String!):Boolean
 }
 type Address {
   _id: ID,
@@ -33,6 +34,7 @@ type User {
   phone: String!
   name: String
   addresses: [Address]
+  fcmToken: String
 }
 
 input VerifyInput {
@@ -114,6 +116,8 @@ type Order{
   mode:String
   status:String
   total:Float
+  dod:String
+  createdAt: String
 }
 
 input CheckoutItem {

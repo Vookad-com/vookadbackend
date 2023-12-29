@@ -2,9 +2,8 @@ version: '3.7'
 services:
   app:
     image: vookadbackend
+    # image: sahilcoder1/vookadbackend
+    build: .
     ports:
-      - 4000:4000
-    networks:
-      - zephweb  
-networks:
-  zephweb:     
+      - 5000:5000
+ 

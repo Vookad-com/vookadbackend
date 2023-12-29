@@ -21,6 +21,7 @@ const resolvers = {
     saveAddress : customer.saveAddress,
     delAddr:customer.delAddress,
     codcheckout:checkout.codcheckout,
+    setFCM:customer.setFcm
   },
 };
 

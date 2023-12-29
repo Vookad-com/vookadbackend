@@ -84,9 +84,34 @@ const getUser = async (_: any, args:any, { token }: { token: string }) => {
     throw new GraphQLError('Error in getting user');
   }
 }
+const getUser_min = async (_: any, args:any, { token }: { token: string }) => {
+  try {
+    const user = await users.findOne({ fireId: token }).select('-addresses');
+    if (!user) {
+      throw new GraphQLError("Unauthorized");
+    }
+    
+    return user; 
+  } catch (error) {
+    logger.error("Error: " + error);
+    throw new GraphQLError('Error in getting user');
+  }
+}
+const setFcm = async (_: any, fcmLoad:{fcmToken:string}, { token }: { token: string }) => {
+  try {
+    const user = await users.updateOne({ fireId: token }, {$set:fcmLoad});
+    
+    return true; 
+  } catch (error) {
+    logger.error("Error: " + error);
+    throw new GraphQLError('Error in setting fcm token');
+  }
+}
 
 export default {
   saveAddress,
   delAddress,
-  getUser
+  getUser,
+  setFcm,
+  getUser_min
 }

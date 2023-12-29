@@ -9,3 +9,9 @@ export interface FirebaseUser {
     firebase: any;
     uid: string;
   }
+
+export interface User {
+  fcmToken:string;
+  phone:string;
+  fireId:string;
+}  
