@@ -31,7 +31,8 @@ enum PaymentMode {
 
 enum OrderStatus {
     PENDING = 'pending',
-    CONFIRMED = 'confirmed',
+    PREPARED = 'prepared',
+    ONTHEWAY = 'ontheway',
     DELIVERED = 'delivered',
     CANCELLED = 'cancelled',
 }

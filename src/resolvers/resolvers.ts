@@ -5,6 +5,7 @@ import inventory from "./inventory";
 import ad_inventory from "../adminResolvers/inventory";
 import feature from "./feature";
 import checkout from "./checkout";
+import chefs from "../adminResolvers/chefs";
 
 const resolvers = {
   Query: {
@@ -14,6 +15,9 @@ const resolvers = {
     inventoryItems: inventory.getItems,
     getUser: customer.getUser,
     nearby:feature.nearby,
+    fetchOrders:customer.fetchOrders,
+    getchef : chefs.getChef,
+    getItem : ad_inventory.getItem,
   },
   Mutation: {
     // checkPhonenSend: auth.checkPhonenSend,

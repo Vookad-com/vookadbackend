@@ -5,6 +5,9 @@ type Query {
   inventoryItems(family:String!): [InventoryItem]
   banner(id:ID!): Banner
   nearby(location:[Float]):[NearbyItem]
+  fetchOrders(page:Float, pageSize:Float):[Order]
+  getchef(id:ID!):Chef
+  getItem(id:ID!): InventoryItem
 }
 type Mutation {
   # checkPhonenSend(phone: String!): UserWithOTP
@@ -108,7 +111,13 @@ type CartItem {
   chefId: ID
   enable: Boolean
 }
-
+type OrderItem{
+  chefid:ID!
+  pdtid:ID!
+  catid:ID!
+  _id:ID!
+  quantity: Float!
+}
 type Order{
   address:Address
   customerid:ID!
@@ -117,6 +126,7 @@ type Order{
   status:String
   total:Float
   dod:String
+  items: [OrderItem]
   createdAt: String
 }
 
@@ -139,4 +149,20 @@ input CheckoutAddress {
   label: [String!]
   pincode: String!
   location: GPS
+}
+
+type Chef {
+  _id: ID
+  name: String!
+  displayname: String!
+  phone: String!
+  location: Location
+  address: chefAddress
+  pincode: String!
+}
+
+type chefAddress {
+  building: String!
+  area: String!
+  landmark: String!
 }

@@ -7,6 +7,8 @@ type Query {
   getchef(id:ID!):Chef
   getchefs:[Chef]
   getMenu(id:ID!): [Menu]
+  getOrdersbyDate(dateISO:String!):[Order]
+  getOrdersByChef(chefId:String!, status:String!):[Order]
 }
 
 type Mutation {
@@ -19,6 +21,7 @@ type Mutation {
   newchef(chef:ChefInput):Chef
   editchef(chef:ChefInput, id:ID!):Chef
   editMenu(chefId:String, inventoryid:String, enable:Boolean):Menu
+  setToPickup(orderid:String):Boolean
 }
 
 # employee stuff
@@ -148,4 +151,48 @@ type Menu {
   inventoryid: ID!
   chefId: ID!
   enable: Boolean
+}
+
+type Address {
+  _id: ID,
+  location: Location!
+  building: String!
+  area: String!
+  pincode: String!
+  landmark: String
+  label: [String]!
+}
+
+type Location {
+  type: String!
+  coordinates: [Float!]!
+}
+
+type User {
+  _id: ID!
+  phone: String!
+  name: String
+  addresses: [Address]
+  fcmToken: String
+}
+
+type OrderItem{
+  chefid:ID!
+  pdtid:ID!
+  catid:ID!
+  _id:ID!
+  quantity: Float!
+}
+
+type Order{
+  address:Address
+  customerid:ID!
+  items: [OrderItem]
+  _id:ID!
+  mode:String
+  status:String
+  total:Float
+  dod:String
+  createdAt: String
+  userInfo: [User]
 }

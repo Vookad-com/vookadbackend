@@ -2,6 +2,7 @@ import auth from "./auth";
 import banner from "./banner";
 import chefs from "./chefs";
 import inventory from "./inventory";
+import orders from "./orders";
 const resolvers = {
   Query: {
     verifyOtp : auth.verifyOtp,
@@ -11,6 +12,8 @@ const resolvers = {
     getchef :chefs.getChef,
     getchefs: chefs.getChefs,
     getMenu: chefs.getMenu,
+    getOrdersbyDate: orders.getOrdersByDate,
+    getOrdersByChef: orders.getOrdersByChef,
   },
   Mutation: {
     checkPhonenSend: auth.checkPhonenSend,
@@ -22,6 +25,7 @@ const resolvers = {
     newchef: chefs.newChef,
     editchef: chefs.editChef,
     editMenu:chefs.editMenu,
+    setToPickup:orders.setToPickup,
   },
 };
 

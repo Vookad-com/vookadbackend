@@ -1,4 +1,5 @@
 import logger from "../logger";
+import { Order } from "../schema/order";
 import { users } from "../schema/user";
 import { GraphQLError } from 'graphql';
 
@@ -108,10 +109,26 @@ const setFcm = async (_: any, fcmLoad:{fcmToken:string}, { token }: { token: str
   }
 }
 
+const fetchOrders = async(_:any, {page=1, pageSize=5}:{page:number, pageSize:number},  { token }: { token: string }) =>{
+  if(!token){
+    token="iE372XGtsuNe9uATB41x0X7dySi1";
+  }
+    
+  try {
+    const skip = (page - 1) * pageSize;
+    const data = await Order.find({customerid:token}).sort({createdAt: -1}).skip(skip).limit(pageSize).exec();
+    return data;
+  } catch (error) {
+    logger.error("Error: " + error);
+    throw new GraphQLError('Error in getting orders');
+  }
+}
+
 export default {
   saveAddress,
   delAddress,
   getUser,
   setFcm,
-  getUser_min
+  getUser_min,
+  fetchOrders
 }
