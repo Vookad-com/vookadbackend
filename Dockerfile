@@ -16,6 +16,9 @@ COPY . .
 # Build the TypeScript code
 RUN npm run build
 
+cloudbuild.options:
+  logsBucket: _Default
+
 # Expose the port your app runs on
 EXPOSE 80
 
