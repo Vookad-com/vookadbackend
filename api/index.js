@@ -1,2 +1,9 @@
 import { app } from 'dist/app';
-export default app;
+const port = process.env.PORT || 5000;
+
+app.listen(port, async () => {
+  /* eslint-disable no-console */
+  console.log(`Listening: http://localhost:${port}`);
+  /* eslint-enable no-console */
+});
+module.exports = app;
